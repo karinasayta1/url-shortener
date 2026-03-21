@@ -6,4 +6,5 @@ import lombok.Data;
 public class UrlRequest {
     private String longUrl;
     private Integer expirationDays; // optional, for later use
+    private String customDomain;
 }

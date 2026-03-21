@@ -21,8 +21,15 @@ public class Url {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @Column(nullable = true)
+    private String customDomain;
+
     private LocalDateTime expiresAt;
 
     @Column(nullable = false)
     private Long clickCount = 0L;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "domain_id")
+    private Domain domain;
 }

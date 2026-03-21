@@ -3,6 +3,7 @@ package com.example.urlshortner.controller;
 import com.example.urlshortner.dto.UrlRequest;
 import com.example.urlshortner.dto.UrlResponse;
 import com.example.urlshortner.service.UrlService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +25,11 @@ public class UrlController {
     }
 
     @GetMapping("/{shortCode}")
-    public void redirectToLongUrl(@PathVariable String shortCode, HttpServletResponse response) throws IOException {
-        Optional<String> longUrlOpt = urlService.getLongUrl(shortCode);
+    public void redirectToLongUrl(@PathVariable String shortCode,
+                                  HttpServletRequest request,
+                                  HttpServletResponse response) throws IOException {
+        String host = request.getServerName();
+        Optional<String> longUrlOpt = urlService.getLongUrl(shortCode, host);
         if (longUrlOpt.isPresent()) {
             response.sendRedirect(longUrlOpt.get());
         } else {
